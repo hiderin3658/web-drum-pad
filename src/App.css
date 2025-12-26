@@ -1,0 +1,23 @@
+/* カスタムスタイル（Tailwind CSSで対応できないもの） */
+
+/* 16列グリッド */
+.grid-cols-16 {
+  grid-template-columns: repeat(16, minmax(0, 1fr));
+}
+
+/* パッドのアクティブ状態のアニメーション */
+@keyframes pad-pulse {
+  0% {
+    box-shadow: 0 0 0 0 rgba(168, 85, 247, 0.7);
+  }
+  70% {
+    box-shadow: 0 0 0 10px rgba(168, 85, 247, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(168, 85, 247, 0);
+  }
+}
+
+.pad-active {
+  animation: pad-pulse 0.3s ease-out;
+}
