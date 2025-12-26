@@ -12,6 +12,10 @@ dist
 dist-ssr
 *.local
 
+# Environment variables
+.env
+.env.local
+
 # Sound files (download separately)
 public/sounds/**/*.mp3
 public/sounds/**/*.wav

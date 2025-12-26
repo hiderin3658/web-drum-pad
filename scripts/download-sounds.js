@@ -3,8 +3,9 @@
  *
  * 使用方法:
  * 1. Pixabay API キーを取得: https://pixabay.com/api/docs/
- * 2. 環境変数を設定: export PIXABAY_API_KEY=your_api_key
- * 3. スクリプトを実行: node scripts/download-sounds.js
+ * 2. .env ファイルを作成してAPIキーを設定:
+ *    PIXABAY_API_KEY=your_api_key_here
+ * 3. スクリプトを実行: npm run download-sounds
  */
 
 import fs from 'fs';
@@ -14,6 +15,21 @@ import { fileURLToPath } from 'url';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
+
+// .env ファイルを読み込む（dotenvを使わずシンプルに実装）
+const envPath = path.join(__dirname, '../.env');
+if (fs.existsSync(envPath)) {
+  const envContent = fs.readFileSync(envPath, 'utf-8');
+  envContent.split('\n').forEach((line) => {
+    const trimmed = line.trim();
+    if (trimmed && !trimmed.startsWith('#')) {
+      const [key, ...values] = trimmed.split('=');
+      if (key && values.length > 0) {
+        process.env[key.trim()] = values.join('=').trim();
+      }
+    }
+  });
+}
 
 // Pixabay API キー（環境変数から取得）
 const PIXABAY_API_KEY = process.env.PIXABAY_API_KEY;
@@ -168,10 +184,11 @@ async function downloadAllSounds() {
 
   // API キーチェック
   if (!PIXABAY_API_KEY) {
-    console.error('❌ エラー: PIXABAY_API_KEY 環境変数が設定されていません');
+    console.error('❌ エラー: PIXABAY_API_KEY が設定されていません');
     console.log('\n使用方法:');
     console.log('1. Pixabay API キーを取得: https://pixabay.com/api/docs/');
-    console.log('2. 環境変数を設定: export PIXABAY_API_KEY=your_api_key');
+    console.log('2. .env ファイルを作成して以下を記述:');
+    console.log('   PIXABAY_API_KEY=your_api_key_here');
     console.log('3. スクリプトを再実行: npm run download-sounds\n');
     process.exit(1);
   }

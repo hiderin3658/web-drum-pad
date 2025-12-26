@@ -35,10 +35,13 @@ Pixabay API を使用して音源を自動ダウンロードします。
 # 1. Pixabay API キーを取得
 # https://pixabay.com/api/docs/ にアクセスしてサインアップ
 
-# 2. 環境変数を設定
-export PIXABAY_API_KEY=your_api_key_here
+# 2. .env ファイルを作成
+cp .env.example .env
 
-# 3. 音源をダウンロード
+# 3. .env ファイルにAPIキーを設定
+# PIXABAY_API_KEY=your_api_key_here
+
+# 4. 音源をダウンロード
 npm run download-sounds
 ```
 
